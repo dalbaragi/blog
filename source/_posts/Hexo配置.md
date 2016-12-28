@@ -1,9 +1,9 @@
 title: Hexo配置
 author: Dalbaragi
 tags:
-  - Hexo
+  - hexo
 categories:
-  - Hexo
+  - hexo
 date: 2016-11-13 00:10:00
 ---
 ## Hexo安装配置
@@ -282,3 +282,4 @@ admin:
 ## 参考
 
 [Hexo官网](https://hexo.io/)
+[Hexo常见问题解决方案](https://xuanwo.org/2014/08/14/hexo-usual-problem/)

@@ -3,9 +3,9 @@ title: Hexo整体备份到GitHub
 date: 2016-11-20 12:44:09
 id: 1479617049
 tags:
-  Hexo
+  hexo
 categories:
-  Hexo
+  hexo
 ---
 
 >通过hexo deploy部署到GitHub时，只会将public文件夹中生成的html文件上传至GitHub仓库，并不会备份配置文件、markdown文件等。下面的工作是为了将Hexo文件夹整个备份到GitHub中。

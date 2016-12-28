@@ -69,9 +69,13 @@ theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+#deploy:
+    #type: git
+    #repository: git@github.com:dalbaragi/dalbaragi.github.io.git
+    #branch: master
 deploy:
     type: git
-    repository: git@github.com:dalbaragi/dalbaragi.github.io.git
+    repository: git@202.5.16.249:hexo.git
     branch: master
 
 admin:

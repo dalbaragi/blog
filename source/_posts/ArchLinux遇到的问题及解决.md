@@ -2,9 +2,9 @@
 title: ArchLinux遇到的问题及解决
 date: 2016-11-10 18:06:31
 tags:
-  [ArchLinux Linux]
+  [archlinux,linux]
 categories:
-  [ArchLinux]
+  [archlinux]
 ---
 
 ## 无法调整亮度

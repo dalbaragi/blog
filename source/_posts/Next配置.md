@@ -1,8 +1,8 @@
 title: Next配置
 tags:
-  - Hexo
+  - hexo
 categories:
-  - Hexo
+  - hexo
 date: 2016-11-04 15:54:00
 ---
 ## Next主题安装配置

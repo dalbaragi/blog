@@ -3,9 +3,9 @@ title: Hexo + markdown 写作
 date: 2016-11-02 09:53:34
 id: 1478051614
 tags:
-  [Hexo, markdown]
+  [hexo, markdown]
 categories:
-  [Hexo]
+  [hexo]
 #keywords: keyword1,keyword2
 #description: description
 ---
