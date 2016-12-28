@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
 #generate and deploy to vps
-hexo g -d   
+hexo clean
+hexo generate
+hexo deploy
 
 #backup blog to github
 cd ~/blog
