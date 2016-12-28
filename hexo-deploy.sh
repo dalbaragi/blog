@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 
-hexo g -d   #generate and deploy
+#generate and deploy to vps
+hexo g -d   
 
+#backup blog to github
+cd ~/blog
 git add .
+git commit -m "备份"
 git push origin hexo
+cd -
