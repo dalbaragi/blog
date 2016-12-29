@@ -27,6 +27,8 @@ $ git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
 $ service nginx stop
 ```
 
+<!--more-->
+
 可以通过下面指令查看80端口是否被占用，若无输出则表示没有被占用。
 ```
 $ netstat -na | grep ':80.*LISTEN'
