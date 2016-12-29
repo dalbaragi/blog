@@ -7,6 +7,42 @@ categories:
     vps
 ---
 
+### 环境
+debian-8.0-x86_64-minimal
+
+### 获取SSL证书
+使用[Let's Encrypt](https://letsencrypt.org/)的证书，它提供了一种容易的方法来获取免费 SSL 证书，并且它的证书为绝大多数浏览器所信任。
+首先安装需要的工具。
+```
+$ apt-get -y install git bc
+``
+
+获取Let's Encrypt客户端到`/opt/letsencrypt`目录中。
+```
+$ git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
+```
+
+关闭VPS中占用80端口的进程（如Nginx）。
+```
+$ service nginx stop
+```
+
+可以通过下面指令查看80端口是否被占用，若无输出则表示没有被占用。
+```
+$ netstat -na | grep ':80.*LISTEN'
+```
+
+进入`/opt/letsencrypt`目录，执行下面命令。如果是第一次使用，软件会自动安装依赖。
+```
+$ ./letsencrypt-auto certonly --standalone
+```
+程序开始运行后，首先输入邮箱，便于接收通知和恢复忘记的key；之后选择同意Let's Encrypt的条款；最后输入域名，多个域名可以使用空格隔开。
+
+证书获取成功后：
+- 证书文件在`/etc/letsencrypt/live/域名/fullchain.pem`
+- KEY文件在`/etc/letsencrypt/live/域名/privkey.pem` 
+
+
 
 ### 谷歌反向代理
 #### 获取谷歌IP
@@ -29,8 +65,6 @@ $ dig www.google.com @8.8.8.8 +short
 [Nginx Google 扩展](https://github.com/cuber/ngx_http_google_filter_module/blob/master/README.zh-CN.md)
 
 ### 其他
-#### 参考
-[利用Nginx反向代理GoogleWikipedia](利用 Nginx 反向代理 Google & Wikipedia)
 
 配置实例
 - wiki.yourdomain.com 用于反代桌面版 Wikipedia
@@ -108,4 +142,9 @@ server {
 ```
 
 #### 遇到的问题
-移动端的域名设置好后，访问会提示证书有问题，可能是因为主机名为`m.wiki`，所以之前的签名无效（不确定）。之后将地址设为`mwiki.yourdomain.com`则可以登录，但是使用chrome打开网页时会提示不安全。
+每个域名都要申请ssl证书，否则可能无法打开网页，或打开网页时显示警告。
+
+
+#### 参考
+[利用Nginx反向代理GoogleWikipedia](利用 Nginx 反向代理 Google & Wikipedia)
+
