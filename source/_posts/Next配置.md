@@ -103,6 +103,22 @@ type: "categories"
 在**主题配置文件**中的`menu:`中添加`categories: /categories`。
 
 
+## 添加本地搜索
+安装`hexo-generator-searchdb`，在Hexo根目录下执行；
+```
+$ npm install hexo-generator-searchdb --save
+```
+
+编辑站点配置文件，添加：
+```
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+```
+
+
 ## 参考
 
 [Next官网](http://theme-next.iissnan.com/)。
