@@ -15,7 +15,7 @@ debian-8.0-x86_64-minimal
 首先安装需要的工具。
 ```
 $ apt-get -y install git bc
-``
+```
 
 获取Let's Encrypt客户端到`/opt/letsencrypt`目录中。
 ```
@@ -28,6 +28,7 @@ $ service nginx stop
 ```
 
 <!--more-->
+
 
 可以通过下面指令查看80端口是否被占用，若无输出则表示没有被占用。
 ```
