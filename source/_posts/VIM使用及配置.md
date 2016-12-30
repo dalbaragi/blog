@@ -432,21 +432,114 @@ tagbar有以下特点：
 - 每次保存文件时或者切换到不同代码文件时tagbar自动调用ctags更是标签数据库
 - tagbar有两种排序方式，一是按标签名字母先后顺序、一是按标签在源码中出现的先后顺序，在`.vimrc`中我配置选用后者，键入s切换不同不同排序方式
 
-#### 生命/定义跳转
-                        
+#### 声明/定义跳转
+需要安装YCM插件与C++编译器clang，之后在`.vimrc`中添加
+```
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+" 只能是 #include 或已打开的文件
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+```
 
+#### 内容查找
+vim支持正则表达式，通过[grep.vim](https://github.com/yegappan/grep)与[ack.vim](https://github.com/mileszs/ack.vim)这两个插件可以在vim中使用高度整合的grep或ack两个外部命令，但是查询时不会首先是上下文。
 
+通过[ctrlsf.vim](https://github.com/dyng/ctrlsf.vim)可以显示上下文。首先需要安装ack，之后使光标定位在想查找的词上，之后在命令模式下键入
+```
+:CtrlSF
+```
+
+在`.vimrc`中定义了快捷键
+```
+" 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
+nnoremap <Leader>sp :CtrlSF<CR>
+```
+
+通过回车可以选择查找的内容，按`q`可以直接退出。
+
+#### 内容替换
+##### 快捷替换
+通过crtlsf进行查找时，在左侧窗口中可以直接进行编辑操作。通过[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)插件可以选择多个相同的词i，设置下列快捷键
+```
+let g:multi_cursor_next_key='<S-x>'
+let g:multi_cursor_skip_key='<S-k>' 
+```
+
+##### 精确替换
+vim的替换命令：
+```
+:[range]s/{pattern}/{string}/[flags]
+```
+
+[range]表示检索范围，省略时表示当前行。
+
+几种相关用法：
+- `1,20`表示从第1行到20行
+- `%`表示整个文件，与`1,$`相同
+- `.,$`表示从当前行到文件尾
+
+[flags]表示操作类型，省略时仅对每行第一个匹配串进行替换。
+
+几种相关用法：
+- `g`表示全局替换
+- `c`表示进行确认
+- `p`表示替代记过逐行显示（`ctrl+L`恢复屏幕）
+如果字符串中出现特殊字符用`\`进行转义。
+
+{pattern} 用于指定匹配模式。如果需要整词匹配，则该字段应由 < 和 > 修饰待替换字符串（如，<iFoo>）；无须整词匹配则不用修饰，直接给定该字符串即可。
+
+下面定义快捷键
+```
+    " 替换函数。参数说明：
+    " confirm：是否替换前逐一确认
+    " wholeword：是否整词匹配
+    " replace：被替换字符串
+    function! Replace(confirm, wholeword, replace)
+        wa
+        let flag = ''
+        if a:confirm
+            let flag .= 'gec'
+        else
+            let flag .= 'ge'
+        endif
+        let search = ''
+        if a:wholeword
+            let search .= '\<' . escape(expand('<cword>'), '/\.*$^~[') . '\>'
+        else
+            let search .= expand('<cword>')
+        endif
+        let replace = escape(a:replace, '/\&~')
+        execute 'argdo %s/' . search . '/' . replace . '/' . flag . '| update'
+    endfunction
+    " 不确认、非整词
+    nnoremap <Leader>R :call Replace(0, 0, input('Replace '.expand('<cword>').' with: '))<CR>
+    " 不确认、整词
+    nnoremap <Leader>rw :call Replace(0, 1, input('Replace '.expand('<cword>').' with: '))<CR>
+    " 确认、非整词
+    nnoremap <Leader>rc :call Replace(1, 0, input('Replace '.expand('<cword>').' with: '))<CR>
+    " 确认、整词
+    nnoremap <Leader>rcw :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<CR>
+    nnoremap <Leader>rwc :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<CR>
+```
 
 ### 代码开发
+#### 快速开关注释
+通过[NERD Commenter](https://github.com/scrooloose/nerdcommenter)可以进行设置，添加配置
+```
+<leader>cc，注释当前选中文本，如果选中的是整行则在每行首添加 //，如果选中一行的部分内容则在选中部分前后添加分别 /、/；
+<leader>cu，取消选中文本块的注释。
+```
+
+此外，通过[DrawIt!](https://github.com/vim-scripts/DrawIt)插件可以使用方向键绘制出ASCLL art风格的注释。通过`:Distart`开始绘制，用方向键绘制线条，空格键绘制或擦除字符，`:Distop`停止绘制。
+
 #### 智能补全
-YCM ArchLinux设置
+YCM ArchLinux设置 
 首先下载并安装clang
 ```
 $ pacman -S clang (编译会得到/usr/lib/libclang.so)
 ```
+
 建立一个文件夹
 ```
-
 $ mkdir ycm_build
 $ cd ycm_build
 ```
