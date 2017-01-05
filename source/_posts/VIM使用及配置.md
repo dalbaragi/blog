@@ -20,6 +20,17 @@ https://github.com/BillWang139967/Vim/blob/master/doc/vim.md
 https://segmentfault.com/q/1010000000151086
 
 ## 使用及配置
+### 使用技巧
+#### 录制宏
+一些重复的操作可以通过录制宏，以方便地执行。在normal模式下，输入`qa`，开始录制，并存储到寄存器`a`中，寄存器可以是`a`~`z`，录制完成后在normal模式下输入q即可。
+在需要执行操作时，在normal模式下输入`@a`，则可以重复执行寄存器`a`中录制的操作，其他寄存器同理。
+
+为了方便，定义调用寄存器的快捷键
+```
+" 快捷调用寄存器a中录制的宏
+nmap <leader>a @a
+```
+
 ### 配置文件
 #### 配置文件概述
 .vimrc是控制vim行为的配置文件，位于`~/.vimrc`,可设置vim窗口外观、显示字体、操作方式、快捷键、插件属性等。
@@ -838,6 +849,53 @@ http://en.cppreference.com/w/Cppreference:Archives
 http://pubs.opengroup.org/onlinepubs/9699919799/functions/contents.html
 http://man7.org/linux/man-pages/dir_all_alphabetic.html
 
+#### python开发环境搭建
+[Pyhon-mode](https://github.com/python-mode/python-mode)插件帮助快速建立python代码，使用[pylint](https://github.com/python-mode/python-mode#pylint)、[rope](https://github.com/python-mode/python-mode#rope)、[pydoc](https://docs.python.org/3/library/pydoc.html)、[pyflakes](https://github.com/python-mode/python-mode#pyflakes)、[pep8](https://github.com/python-mode/python-mode#pep8)、[autopep8](https://github.com/python-mode/python-mode#autopep8)、[pep257](https://github.com/python-mode/python-mode#pep257)、[mccabe](https://github.com/python-mode/python-mode#mccabe)等库，提供静态分析、重构、代码折叠、补全、文档，以及其他有用的功能。
+
+**插件的特性**
+- 支持python 2.6+和3.2+
+- 代码高亮
+- 支持Virtualenv
+- 运行python代码(`<leader>r`)
+- 添加/移除断点(`<leader>b`)
+- python缩进
+- python折叠
+- python跳转与操作符(`]]`, `3[[`, `]]M`, `vaC`, `viM`, `daC`, `ciM`, ...) 
+- 代码检查(pylint, pyflakes, pylama, ...)，可以同步运行(`:PymodeLint`)
+- 自动修复PEP8 errors(`:PymodeLintAuto`)
+- 在python文档中查找(`K`)
+- 代码重构<rope refactoring library>(rope)
+- 强大的代码补全(rope)
+- 跳转到定义(`<C-c>g`或`:RopeGotoDefinition`)
+- 更多.........
+
+可以定义如下快捷键
+```
+" Override go-to.definition key shortcut to Ctrl-]
+let g:pymode_rope_goto_definition_bind = "<C-]>"
+
+" Override run current python file key shortcut to Ctrl-Shift-e
+let g:pymode_run_bind = "<C-S-e>"
+
+" Override view python doc key shortcut to Ctrl-Shift-d
+let g:pymode_doc_bind = "<C-S-d>"
+```
+
+python移动按键
+`[[`：跳转到前一个class或function
+`]]`：跳转到下一个class或function
+`[M`：跳转到前一个class或method
+`]M`：跳转到下一个class或method
+`aC`：选择一个class，可使用`vaC`、`daC`、`yaC`、`caC`
+`iC`：选择inner class，可使用`viC`、`diC`、`yiC`、`ciC`
+`aM`：选择一个function或method，`vaM`、`daM`、`yaM`、`caM`
+`iM`：选择inner function或method，`viM`、`diM`、`yiM`、`ciM`
+
+python-mode默认使用python2语法检查，若想使用python3语法，则添加
+```
+let g:pymode_python = 'python3'
+```
+
 ### 工程管理
 #### 工程文件浏览
 通过[NERDtree](https://github.com/scrooloose/nerdtree)插件可以查看文件列表，安装好插件后在`.vimrc`中添加
@@ -1048,5 +1106,24 @@ VIM有两类快速移动光标的方式：一类是以单词为单位的移动�
 
 终端下设置 Vim 'ttimeoutlen' 选项为较小值（如100），否则退出插入模式时会有较严重的延迟。同样会造成延迟的还有screen的maptimeout选项以及tmux的escape-time选项。
 
+#### markdown表格快速绘制
+[vim-table-mode](https://github.com/dhruvasagar/vim-table-mode)插件可以对markdown表格快速进行格式化。安装需要添加如下配置
+```
+" vim-table-mode插件用于markdown时需要添加下列设置
+let g:table_mode_corner="|"
+```
+
+部分操作如下:
+- <leader>tm：tablemode开关
+- `<Leader>tt`：使用g:table_mode_delimiter定义的分隔符插入表格
+- `<Leader>T`：使用用户输入的分隔符插入表格
+- `<Leader>tr`：重新对齐
+- `[|`：移动到前一个表格
+- `]|`：移动到下一个表格
+- `{|`：移动到上面一个表格
+- `}|`：移动到下面一个表格
+- `||`：插入表头边框
+- `<Leader>tdd`：删除一行
+- `<Leader>tdc`：删除一列
 -----------------------------------------------
-待完善...
+完善中...
