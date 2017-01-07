@@ -64,3 +64,9 @@ userlist_file=/etc/vsftpd.user_list
 ```
 $ sudo systemctl restart vsftpd
 ```
+
+### 其他
+使用Debian建立ftp服务器时，可能会出现*vsftpd: "500 OOPS: priv_sock_get_cmd"*的错误，解决方法为，在`/etc/vsftpd.conf`中添加
+```
+seccomp_sandbox=no
+```
