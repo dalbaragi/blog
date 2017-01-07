@@ -53,6 +53,10 @@ $ mkdir hexo.git && cd hexo.git
 $ git init --bare
 ```
 若通过ssh能够登录到vps，则表示设置成功。
+
+需要注意的是，authorized_keys文件只能其用户有读写权限。此外，当需要设置多个ssh公钥时，每个公钥占用一行即可。
+
+
 #### 创建网站目录
 ```
 $ cd /var/www
@@ -76,7 +80,7 @@ git clone $GIT_REPO $TMP_GIT_CLONE
 rm -rf ${PUBLIC_WWW}/*
 cp -rf ${TMP_GIT_CLONE}/* ${PUBLIC_WWW}
 ```
-之后富裕执行权限。
+之后赋予执行权限。
 ```
 $ chmod +x post-receive
 ```
@@ -125,7 +129,7 @@ deploy:
 ```
 ### 配置ssh端口
 当vps的ssh修改为其他端口号，需要进行下列操作。
-修改`~/.ssh/config`文件。
+修改本地的`~/.ssh/config`文件。
 ```
 host example
 hostname example.com
