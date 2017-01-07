@@ -26,7 +26,7 @@ $ sudo pacman -S vsftpd
 ### 新建ftp用户
 为vsftpd新建一个本地用户，用户名设为vsftpd。
 ```
-$ sudo useradd -m -d /home/vsftpd -s /bin/zsh
+$ sudo useradd vsftpd -m -d /home/vsftpd -s /bin/zsh
 ```
 
 为此用户设定密码
