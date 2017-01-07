@@ -23,6 +23,11 @@ $ sudo pacman -S vsftpd
 
 <!--more-->
 
+### 启动vsftpd服务
+```
+$ sudo systemctl start vsftpd
+```
+
 ### 新建ftp用户
 为vsftpd新建一个本地用户，用户名设为vsftpd。
 ```
@@ -54,3 +59,8 @@ userlist_file=/etc/vsftpd.user_list
 ```
 
 其中，`/etc/vsftpd.user_list`为配置文件路径，需要自己建立。之后在`/etc/vsftpd.user_list`中添加允许的用户名即可。
+
+### 重启vsftpd服务
+```
+$ sudo systemctl restart vsftpd
+```
