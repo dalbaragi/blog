@@ -66,7 +66,26 @@ $ sudo systemctl restart vsftpd
 ```
 
 ### 其他
-使用Debian建立ftp服务器时，可能会出现*vsftpd: "500 OOPS: priv_sock_get_cmd"*的错误，解决方法为，在`/etc/vsftpd.conf`中添加
+1. 使用Debian建立ftp服务器时，可能会出现*vsftpd: "500 OOPS: priv_sock_get_cmd"*的错误，解决方法为，在`/etc/vsftpd.conf`中添加
 ```
 seccomp_sandbox=no
 ```
+
+2. 可以通过chroot将用户限定在自己的主目录中，提供一定的安全保障。在`/etc/vsftpd.conf`中添加/修改
+```
+# You may specify an explicit list of local users to chroot() to their home
+# directory. If chroot_local_user is YES, then this list becomes a list of
+# users to NOT chroot().
+# (Warning! chroot'ing can be very dangerous. If using chroot, make sure that
+# the user does not have write access to the top level directory within the
+# chroot)
+chroot_local_user=YES
+chroot_list_enable=YES
+# (default follows)
+chroot_list_file=/etc/vsftpd.chroot_list
+allow_writeable_chroot=YES
+```
+
+其中，设定使能chroot模式，并设定白名单文件`/etc/vsftpd.chroot_list`，在其中设定允许访问所有目录外的用户名。此外，如果设定了用户写使能，则在设定chroot时，需要额外添加`allow_writeable_chroot=YES`
+
+
