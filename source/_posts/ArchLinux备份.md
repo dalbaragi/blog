@@ -46,7 +46,7 @@ $ rsync -avXAP --delete --exclude-from=/home/用户名/.exclude.list / ~/backup
 
 ## 还原
 ```
-# rsync -avXAP SRC / #SRC是备份的目录
+# sudo rsync -avXAP SRC / #SRC是备份的目录
 ```
 
 具体参考文章开头给出的参考文章。
