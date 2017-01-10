@@ -20,3 +20,9 @@ EndSection
 ```
 
 <!--more-->
+
+## PDF中文乱码
+需要安装`poppler-data`
+```
+$ pacman -S poppler-data
+```
